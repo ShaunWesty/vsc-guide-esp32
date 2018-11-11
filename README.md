@@ -187,7 +187,7 @@ Use Command window (Don't use the Integrated Terminal) at your project folder. R
 If you are not in Powershell but in cmd.exe - you can run `powershell idf.py menuconfig`<br/>
 <br/>
 Example:<br/>
-<img src="vsc-guide-4.bmp" ><br/>
+<img src="vsc-guide-4.jpg" ><br/>
 <img src="esp-configmenu.jpg" ><br/>
 
 Hit ESC until menuconfig asks about saving the configuration.<br/>
