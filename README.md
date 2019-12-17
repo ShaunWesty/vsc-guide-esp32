@@ -55,21 +55,25 @@ You need the following:<br/>
 [To Top](#Steps)
 
 ## Setup toolchain
-
-Next you need tools for compilation and linking your projects
-Go to below link and follow instructions
-https://docs.espressif.com/projects/esp-idf/en/feature-cmake/get-started/index.html#setup-toolchain
-
-You need to download all-in-one esp-idf tools installer
-<a href="https://dl.espressif.com/dl/esp-idf-tools-setup-1.1.exe">https://dl.espressif.com/dl/esp-idf-tools-setup-1.1.exe</a>
-and get the latest ESP-IDF framework
-
-<a href="https://docs.espressif.com/projects/esp-idf/en/feature-cmake/get-started/index.html#get-started-get-esp-idf">How to get ESP-IDF</a>
-
 [To Top](#Steps)
+Next you need tools for compilation and linking your projects
+Go to below link and follow instructions. I will link to the individual stages as well below:
+I have not tested this process yet to see if there is more information 'for dummies' needed. The information
+changes often enough and ESPRESSIF are getting decent documentation.
+https://docs.espressif.com/projects/esp-idf/en/latest/get-started/
 
+Step 1. Install prerequisites
+https://docs.espressif.com/projects/esp-idf/en/latest/get-started/#step-1-install-prerequisites
+
+Step 2. Get ESP-IDF
+https://docs.espressif.com/projects/esp-idf/en/latest/get-started/#step-2-get-esp-idf
+
+Step 3. Set up the tools
+https://docs.espressif.com/projects/esp-idf/en/latest/get-started/#step-3-set-up-the-tools
+
+Step 4. Set up the environment variables
+https://docs.espressif.com/projects/esp-idf/en/latest/get-started/#step-4-set-up-the-environment-variables
 ## Setup and verify environment variables
-
 Make sure all path and idf variables are present and pointing to the *right locations* as it had changed between for me compared to the original guide. 
 IDF_PATH is cruicial. 
 You can use run-command way to set them up with 
@@ -78,8 +82,19 @@ You can use run-command way to set them up with
 Example setup:
 <br/>
 
+This is the System Variables -> Path. I have the ESP-IDF and ESP8266 toolchain installed so need
+paths to both of the build tools
 <img src="vsc-guide-2.jpg" >
+Here you can see the Environment Variables. See that I have two IDF_PATH variables referring to the 
+esp-idf and esp8266. When I develop in 8266, the IDF_PATH needs to be to that SDK. I add a '32_' to the 
+start of the ESP32 variable. I just change the Variable name, not the Value
+For 8266 development, my variables are - 32_IDF_PATH, IDF_PATH
+For ESP32 development, my variables are - IDF_PATH, 8266_IDF_PATH
+respectively. This IDF_PATH is used in the SDK and the VSC. The first entry in Path (circled) is from 
+the variable IDF_PATH
 <img src="vsc-guide-3.jpg" >
+This is what it looks like using the variable.
+<img src="vsc-guide-3a.jpg" >
 
 **Make sure you install Git for Windows**<br/>
 <a href="https://git-scm.com/downloads">Git Client download page</a>
@@ -115,6 +130,9 @@ Perform a regular Find and Replace \ / (converting a backslash to a forward slas
 Perform a regular Find **C:/.../esp-idf** <- All of the bits in the middle please. Replace with 
 >${env:IDF_PATH}
 
+Seems that Export-Csv is not working so next do a find and replace on 
+\r with ,\r (you will need to select "Extended")
+
 Unfortunately the engineers at Espressif are not nice. So they include some of their .h files
 in a different directory (twats) for example components/json/cJSON. Seriously WTF? 
 
@@ -135,7 +153,7 @@ This should also have (assumming the toolchain is installed as shown)
   "C:/Program Files/Espressif/ESP-IDF Tools/toolchain/lib/gcc/xtensa-esp32-elf/5.2.0/include-fixed"}
 ```
 
-Now copy this entire array and replace the "This Section Please." Press SAVE.
+Now copy this entire array and replace the "Replace this section please." Press SAVE.
 ```json
   {
     "intelliSenseMode": "clang-x64",
@@ -169,6 +187,12 @@ if you want to flash and immediately monitor use
  
 `build` will build project with changes <br/>
 `fullclean` will erase old files and refresh the whole build for new compilation <br/>
+
+Create batch files for these locally because we are lazy and just want to press f followed by enter.
+I suggest this includes 'cls' so that you get a clean screen before compiling.
+f.bat
+cls
+idf.py -p COM4 flash
 
 Typical project file structure: <br/>
 
